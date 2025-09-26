@@ -24,7 +24,7 @@ This project demonstrates a microservices‑based API platform deployed on Kuber
 
 ```bash
 # Clone the repo
-git clone <[https://github.com/Alok2580/Digital-Ecosystem-API-Platform.git](https://github.com/Alok2580/Digital-Ecosystem-API-Platform.git)>
+git clone https://github.com/Alok2580/Digital-Ecosystem-API-Platform.git
 cd digital-ecosystem-api-platform
 
 # Copy env template
