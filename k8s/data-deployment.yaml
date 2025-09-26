@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data
+  namespace: digital-ecosystem
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: data
+  template:
+    metadata:
+      labels:
+        app: data
+    spec:
+      containers:
+        - name: data
+          image: ghcr.io/YOUR_GITHUB_USERNAME/service-data:latest
+          env:
+            - name: MONGO_URI
+              value: mongodb://mongo:27017/items
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: auth-secret
+                  key: jwt_secret
+          ports:
+            - containerPort: 3000

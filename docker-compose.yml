@@ -1,0 +1,32 @@
+version: "3.9"
+services:
+  auth:
+    build: ./service-auth
+    environment:
+      - JWT_SECRET=${JWT_SECRET:-supersecret}
+    ports:
+      - "3001:3000"
+  data:
+    build: ./service-data
+    environment:
+      - MONGO_URI=${MONGO_URI:-mongodb://mongo:27017/items}
+      - JWT_SECRET=${JWT_SECRET:-supersecret}
+    ports:
+      - "3002:3000"
+    depends_on:
+      - mongo
+  gateway:
+    build: ./api-gateway
+    environment:
+      - GATEWAY_PORT=${GATEWAY_PORT:-8080}
+      - AUTH_SERVICE_URL=http://auth:3000
+      - DATA_SERVICE_URL=http://data:3000
+    ports:
+      - "8080:8080"
+    depends_on:
+      - auth
+      - data
+  mongo:
+    image: mongo:7.0
+    ports:
+      - "27017:27017"
